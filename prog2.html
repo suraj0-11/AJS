@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="shoppingApp">
+<head>
+  <title>Shopping List App</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    .sur {
+      font-size: 30px;
+      text-align: center;
+      border: 1px solid black;
+      border-radius: 20px;
+      display: inline-block; /* Ensures the div only takes the width of its content */
+      padding: 10px; /* Add padding to create space between content and border */
+      background-color: azure;
+    }
+    .sur input {
+      font-size: 30px;
+      margin: 5px 0; /* Add margin to input for spacing */
+    }
+  </style>
+</head>
+<body>
+
+<div class="sur" ng-controller="ShoppingController">
+  <h2>Shopping List</h2>
+
+  <input type="text" ng-model="newItem" placeholder="Enter new item" />
+  <button ng-click="addItem()">Add Item</button>
+
+  <ul>
+    <li ng-repeat="item in shoppingList">
+      {{ item }}
+      <button ng-click="removeItem($index)">Remove</button>
+    </li>
+  </ul>
+</div>
+
+<script>
+  angular.module('shoppingApp', [])
+  .controller('ShoppingController', function($scope) {
+    $scope.shoppingList = ["Apples", "Bananas", "Milk", "Bread"];
+    $scope.newItem = "";
+
+    $scope.addItem = function()  {
+        $scope.shoppingList.push($scope.newItem);
+        $scope.newItem = "";
+      };
+
+    $scope.removeItem = function(index) {
+      $scope.shoppingList.splice(index, 1);
+    };
+  });
+</script>
+
+</body>
+</html>
