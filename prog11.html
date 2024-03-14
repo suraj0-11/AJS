@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="studentApp">
+<head>
+  <title>Student Details</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="StudentController as ctrl">
+  <h2>Student Details</h2>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Roll Number</th>
+    </tr>
+    <tr ng-repeat="student in ctrl.students">
+      <td>{{ student.name | uppercase }}</td>
+      <td>{{ student.rollNumber | uppercase }}</td>
+    </tr>
+  </table>
+</body>
+<script>
+  angular.module('studentApp', []).controller('StudentController', function () {
+    var ctrl = this;
+
+    ctrl.students = [
+      { name: 'John Doe', rollNumber: 'A123' },
+      { name: 'Jane Smith', rollNumber: 'B456' }
+    ];
+  });
+</script>
+</html>
