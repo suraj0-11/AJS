@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="loginApp">
+<head>
+  <title>Login Form</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="LoginController">
+  <h2>Login Form</h2>
+  
+  <form ng-submit="submitForm()">
+    <label>Username:</label>
+    <input type="text" ng-model="user.username" required>
+
+    <br>
+
+    <label>Password:</label>
+    <input type="password" ng-model="user.password" required>
+
+    <br>
+
+    <button type="submit">Login</button>
+  </form>
+
+  <script>
+    var app = angular.module('loginApp', []).controller('LoginController', function($scope) {
+      $scope.user = {};
+
+      $scope.submitForm = function() {
+        
+      };
+    });
+  </script>
+</body>
+</html>
