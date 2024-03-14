@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="crudApp">
+<head>
+  <meta charset="UTF-8">
+  <title>AngularJS CRUD Example</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-controller="userController">
+  <h2>Users</h2>
+
+  <form ng-submit="addUser()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" ng-model="newUser.name" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" ng-model="newUser.email" required>
+    <button type="submit">Add User</button>
+  </form>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Action</th>
+    </tr>
+    <tr ng-repeat="user in users">
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <button ng-click="editUser(user)">Edit</button>
+        <button ng-click="deleteUser(user)">Delete</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<script>
+  angular.module('crudApp', []).controller('userController', function ($scope) {
+    $scope.users = [
+      { name: 'John Doe', email: 'john@example.com' },
+      { name: 'Jane Doe', email: 'jane@example.com' }
+    ];
+
+    $scope.newUser = {};
+
+    $scope.addUser = function () {
+      $scope.users.push(angular.copy($scope.newUser));
+      $scope.newUser = {};
+    };
+
+    $scope.editUser = function (user) {
+      $scope.newUser = angular.copy(user);
+      $scope.deleteUser(user);
+    };
+
+    $scope.deleteUser = function (user) {
+      var index = $scope.users.indexOf(user);
+      if (index !== -1) {
+        $scope.users.splice(index, 1);
+      }
+    };
+  });
+</script>
+
+</body>
+</html>
+
