@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="employeeApp">
+<head>
+  <title>Employee Management</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="EmployeeController as ctrl">
+  <h2>Employee List</h2>
+
+  <label>Search by Name:</label>
+  <input type="text" ng-model="ctrl.searchName" />
+
+  <label>Search by Salary:</label>
+  <input type="text" ng-model="ctrl.searchSalary" />
+
+  <ul>
+    <li ng-repeat="employee in ctrl.filteredEmployees">
+      {{ employee.name }} - {{ employee.salary | currency }}
+    </li>
+  </ul>
+
+  <script>
+    angular.module('employeeApp', []).controller('EmployeeController', function () {
+      var ctrl = this;
+
+      ctrl.employees = [
+        { name: 'John Doe', salary: 50000 },
+        { name: 'Jane Smith', salary: 60000 },
+        { name: 'Bob Johnson', salary: 75000 }
+      ];
+
+      ctrl.filteredEmployees = ctrl.employees;
+
+      ctrl.filterEmployees = function () {
+        ctrl.filteredEmployees = ctrl.employees.filter(function (employee) {
+          var nameMatch = !ctrl.searchName || employee.name.toLowerCase().includes(ctrl.searchName.toLowerCase());
+          var salaryMatch = !ctrl.searchSalary || employee.salary.toString().includes(ctrl.searchSalary);
+          return nameMatch && salaryMatch;
+        });
+      };
+
+      ctrl.filterEmployees();
+    });
+  </script>
+</body>
+</html>
