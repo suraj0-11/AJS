@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="studentApp">
+<head>
+  <title>Student Details</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-controller="StudentController">
+  <h2>Student Details</h2>
+
+  <label>Number of students:</label>
+  <input type="number" ng-model="numberOfStudents" min="1" required>
+  <button ng-click="generateStudentDetails()">Generate Details</button>
+
+
+    <h3>Student Count: {{ studentDetails.length }}</h3>
+    <ul>
+      <li ng-repeat="student in studentDetails">
+        <strong>{{ student.name }}</strong> - CGPA: {{ student.cgpa }}
+      </li>
+    </ul>
+  
+</div>
+
+<script>
+  angular.module('studentApp', []).controller('StudentController', function($scope) {
+    $scope.studentDetails = [];
+    var staticStudentDetails = [
+      { name: 'SURAJ', cgpa: '8.3' },
+      { name: 'RAJIV', cgpa: '5.2' },
+      { name: 'SAGAR K', cgpa: '4.2' },
+      { name: 'LALIT', cgpa: '7.5' },
+      { name: 'SAGAR GF', cgpa: '1.2' }
+    ];
+
+    $scope.generateStudentDetails = function() {
+      $scope.studentDetails = staticStudentDetails.slice(0, $scope.numberOfStudents);
+    };
+  });
+</script>
+
+</body>
+</html>
