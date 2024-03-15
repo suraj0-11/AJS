@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <title>AngularJS Date Filter</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="MainController">
+
+  <label>Start Date:</label>
+  <input type="date" ng-model="startDate">
+
+  <label>End Date:</label>
+  <input type="date" ng-model="endDate">
+
+  <ul>
+    <li ng-repeat="item in data | filter: filterByDate">{{ item.name }} - {{ item.date }}</li>
+  </ul>
+
+  <script>
+    angular.module('myApp', [])
+    .controller('MainController', function ($scope) {
+      $scope.data = [
+        { name: 'Item 1', date: '2023-01-01' },
+        { name: 'Item 2', date: '2023-02-15' },
+        { name: 'Item 3', date: '2023-03-20' }
+      ];
+
+      $scope.filterByDate = function (item) {
+        var startDate = $scope.startDate ? new Date($scope.startDate) : new Date(0);
+        var endDate = $scope.endDate ? new Date($scope.endDate) : new Date();
+
+        var itemDate = new Date(item.date);
+
+        return itemDate >= startDate && itemDate <= endDate;
+      };
+    });
+  </script>
+
+</body>
+</html>
