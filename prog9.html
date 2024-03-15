@@ -13,6 +13,8 @@
   <label>Search by Salary:</label>
   <input type="text" ng-model="ctrl.searchSalary" />
 
+  <button ng-click="ctrl.filterEmployees()">Search</button>
+
   <ul>
     <li ng-repeat="employee in ctrl.filteredEmployees">
       {{ employee.name }} - {{ employee.salary | currency }}
@@ -20,7 +22,7 @@
   </ul>
 
   <script>
-    angular.module('employeeApp', []).controller('EmployeeController', function () {
+    angular.module('employeeApp', []).controller('EmployeeController', function ($scope) {
       var ctrl = this;
 
       ctrl.employees = [
@@ -28,8 +30,6 @@
         { name: 'Jane Smith', salary: 60000 },
         { name: 'Bob Johnson', salary: 75000 }
       ];
-
-      ctrl.filteredEmployees = ctrl.employees;
 
       ctrl.filterEmployees = function () {
         ctrl.filteredEmployees = ctrl.employees.filter(function (employee) {
