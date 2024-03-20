@@ -16,20 +16,30 @@
 
   <ul>
     <li ng-repeat="task in tasks">
-      <span>{{ task }}</span>
+      <span ng-show="!task.editing">{{ task.name }}</span>
+      <input ng-show="task.editing" ng-model="task.name" />
+      <button ng-click="editTask(task)">{{ task.editing ? 'Save' : 'Edit' }}</button>
       <button ng-click="deleteTask($index)">Delete</button>
     </li>
   </ul>
 
   <script>
     angular.module('todoApp', []).controller('TodoController', function ($scope) {
-      $scope.tasks = ['Task 1', 'Task 2', 'Task 3'];
+      $scope.tasks = [
+        { name: 'Task 1', editing: false },
+        { name: 'Task 2', editing: false },
+        { name: 'Task 3', editing: false }
+      ];
 
       $scope.addTask = function () {
         if ($scope.newTask) {
-          $scope.tasks.push($scope.newTask);
+          $scope.tasks.push({ name: $scope.newTask, editing: false });
           $scope.newTask = '';
         }
+      };
+
+      $scope.editTask = function (task) {
+        task.editing = !task.editing;
       };
 
       $scope.deleteTask = function (index) {
