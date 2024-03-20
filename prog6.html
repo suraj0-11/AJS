@@ -7,7 +7,7 @@
 </head>
 
 <body ng-controller="TodoController">
-  <h2>AngularJS Todo List</h2>
+  <h2>Todo List</h2>
 
   <form ng-submit="addTask()">
     <input type="text" ng-model="newTask" placeholder="Add a new task..." required />
@@ -16,34 +16,23 @@
 
   <ul>
     <li ng-repeat="task in tasks">
-      <span ng-show="!task.editing">{{ task.name }}</span>
-      <input ng-show="task.editing" ng-model="task.name" />
-      <button ng-click="editTask(task)">{{ task.editing ? 'Save' : 'Edit' }}</button>
-      <button ng-click="deleteTask(task)">Delete</button>
+      <span>{{ task }}</span>
+      <button ng-click="deleteTask($index)">Delete</button>
     </li>
   </ul>
 
   <script>
     angular.module('todoApp', []).controller('TodoController', function ($scope) {
-      $scope.tasks = [
-        { name: 'Task 1', editing: false },
-        { name: 'Task 2', editing: false },
-        { name: 'Task 3', editing: false }
-      ];
+      $scope.tasks = ['Task 1', 'Task 2', 'Task 3'];
 
       $scope.addTask = function () {
         if ($scope.newTask) {
-          $scope.tasks.push({ name: $scope.newTask, editing: false });
+          $scope.tasks.push($scope.newTask);
           $scope.newTask = '';
         }
       };
 
-      $scope.editTask = function (task) {
-        task.editing = !task.editing;
-      };
-
-      $scope.deleteTask = function (task) {
-        var index = $scope.tasks.indexOf(task);
+      $scope.deleteTask = function (index) {
         $scope.tasks.splice(index, 1);
       };
     });
